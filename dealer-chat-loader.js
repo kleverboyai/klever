@@ -61,16 +61,25 @@
         }
     }
 
-    API.insert("page-footer", (elem) => {
-        const div = document.createElement("div");
-        div.innerHTML = `
-            <button id="load-chat-widget" style="position: fixed; bottom: 20px; right: 20px; padding: 20px 25px; background: #D90A0AFF; color: #FFF; border: none; border-radius: 10px; cursor: pointer; z-index: 1000;">
-                Available 24/7
-            </button>
-        `;
-        API.append(elem, div);
+    // Insert Chat Button Without API.insert()
+    document.addEventListener("DOMContentLoaded", function () {
+        let chatButton = document.createElement("button");
+        chatButton.id = "load-chat-widget";
+        chatButton.textContent = "Available 24/7";
+        chatButton.style.position = "fixed";
+        chatButton.style.bottom = "20px";
+        chatButton.style.right = "20px";
+        chatButton.style.padding = "20px 25px";
+        chatButton.style.background = "#D90A0AFF";
+        chatButton.style.color = "#FFF";
+        chatButton.style.border = "none";
+        chatButton.style.borderRadius = "10px";
+        chatButton.style.cursor = "pointer";
+        chatButton.style.zIndex = "1000";
 
-        document.getElementById("load-chat-widget").addEventListener("click", function () {
+        document.body.appendChild(chatButton);
+
+        chatButton.addEventListener("click", function () {
             this.remove(); // Remove button after clicking
             getDealershipWidgetId(loadChatWidget);
         });
