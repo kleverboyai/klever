@@ -4,8 +4,10 @@
         let repoBase = "https://kleverboyai.github.io/automotive/dealerships/";
 
         let dealershipFiles = {
-            "jameschevrolet.com": "jameschevrolet.json",
-            "anotherdealership.com": "anotherdealership.json"
+            "jameschevrolet.co": "jameschevrolet.json",
+            "jameschrysler.com": "jamescdjr.json",
+            "jamesmitsubishigreece.com": "jamesgreece.json",
+            "jamesmitsubishi.com": "jamesrome.json
             // Add more dealerships here...
         };
 
