@@ -61,7 +61,7 @@
         }
     }
 
-    // Insert Chat Button Without API.insert()
+    // ✅ **Directly Append Button to the DOM (No API.insert())**
     document.addEventListener("DOMContentLoaded", function () {
         let chatButton = document.createElement("button");
         chatButton.id = "load-chat-widget";
@@ -85,3 +85,4 @@
         });
     });
 })();
+
