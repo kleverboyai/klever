@@ -1,7 +1,7 @@
 (function () {
     function getDealershipWidgetId(callback) {
         let hostname = window.location.hostname.replace("www.", "").toLowerCase();
-        let repoBase = "https://kleverboyai.github.io/automotive/dealerships/";
+        let repoBase = "https://kleverboyai.github.io/klever/dealerships/";
 
         let dealershipFiles = {
             "jameschevrolet.co": "jameschevrolet.json",
