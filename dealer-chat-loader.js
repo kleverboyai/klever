@@ -7,7 +7,7 @@
             "jameschevrolet.co": "jameschevrolet.json",
             "jameschrysler.com": "jamescdjr.json",
             "jamesmitsubishigreece.com": "jamesgreece.json",
-            "jamesmitsubishi.com": "jamesrome.json
+            "jamesmitsubishi.com": "jamesrome.json"
             // Add more dealerships here...
         };
 
