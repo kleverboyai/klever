@@ -1,33 +1,63 @@
 (function () {
-    function getDealershipFile() {
-        // Extract domain name to determine dealership
+    function getDealershipWidgetId(callback) {
         let hostname = window.location.hostname.replace("www.", "").toLowerCase();
+        let repoBase = "https://kleverboyai.github.io/automotive/dealerships/";
 
-        // Mapping domains to GitHub-hosted dealership files
-        let repoBase = "https://cdn.jsdelivr.net/gh/kleverboyai/automotive@main/";
         let dealershipFiles = {
-            "jameschevrolet.co": "jameschevrolet/dealer-chat-widget.js",
-            "anotherdealership.com": "anotherdealership/dealer-chat-widget.js",
+            "jameschevrolet.com": "jameschevrolet.json",
+            "anotherdealership.com": "anotherdealership.json"
             // Add more dealerships here...
         };
 
-        return dealershipFiles[hostname] ? repoBase + dealershipFiles[hostname] : null;
-    }
+        let jsonUrl = dealershipFiles[hostname] ? repoBase + dealershipFiles[hostname] : null;
 
-    function loadChatScript() {
-        let scriptUrl = getDealershipFile();
-        if (!scriptUrl) {
+        if (!jsonUrl) {
             console.warn("No chat widget configured for this dealership.");
             return;
         }
 
-        let chatScript = document.createElement("script");
-        chatScript.src = scriptUrl;
-        chatScript.async = true;
-        document.body.appendChild(chatScript);
+        fetch(jsonUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.widgetId) {
+                    callback(data.widgetId);
+                } else {
+                    console.error("Widget ID not found in JSON.");
+                }
+            })
+            .catch(error => console.error("Error loading dealership JSON:", error));
     }
 
-    // Insert button dynamically
+    function loadChatWidget(widgetId) {
+        if (!window.chatLoaded) {
+            window.chatLoaded = true;
+
+            let loadChatBtn = document.getElementById("load-chat-widget");
+            if (loadChatBtn) {
+                loadChatBtn.remove();
+            }
+
+            let chatScript = document.createElement("script");
+            chatScript.src = "https://widgets.leadconnectorhq.com/loader.js";
+            chatScript.dataset.resourcesUrl = "https://widgets.leadconnectorhq.com/chat-widget/loader.js";
+            chatScript.dataset.widgetId = widgetId;
+            chatScript.async = true;
+            document.body.appendChild(chatScript);
+
+            chatScript.onload = function () {
+                if (window.LC_API) {
+                    setTimeout(() => {
+                        window.LC_API.open_chat();
+                    }, 1000);
+                }
+            };
+        } else {
+            if (window.LC_API) {
+                window.LC_API.open_chat();
+            }
+        }
+    }
+
     API.insert("page-footer", (elem) => {
         const div = document.createElement("div");
         div.innerHTML = `
@@ -37,10 +67,9 @@
         `;
         API.append(elem, div);
 
-        // Attach click event to load correct chat script
         document.getElementById("load-chat-widget").addEventListener("click", function () {
             this.remove(); // Remove button after clicking
-            loadChatScript();
+            getDealershipWidgetId(loadChatWidget);
         });
     });
 })();
