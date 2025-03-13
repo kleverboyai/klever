@@ -75,7 +75,7 @@
     API.insert("page-footer", (elem) => {
         const div = document.createElement("div");
         div.innerHTML = `
-            <button id="load-chat-widget" style="position: fixed; bottom: 60px; right: 20px; padding: 15px 20px; background: #D90A0AFF; color: #FFF; border: none; border-radius: 10px; cursor: pointer; z-index: 1000;">
+            <button id="load-chat-widget" style="position: fixed; bottom: 85px; right: 20px; padding: 15px 20px; background: #D90A0AFF; color: #FFF; border: none; border-radius: 10px; cursor: pointer; z-index: 1000;">
                 Ask Us Anything
             </button>
         `;
