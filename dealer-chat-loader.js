@@ -7,7 +7,7 @@
 
         let dealershipFiles = {
             "jameschevy.co": "jameschevy.json", // ✅ Ensure this exists
-            "jameschevrolet.co": "jameschevrolet.json",
+            "jameschevrolet.co": "jameschevy.json",
             "jameschrysler.com": "jamescdjr.json",
             "jamesmitsubishigreece.com": "jamesgreece.json",
             "jamesmitsubishi.com": "jamesrome.json",
