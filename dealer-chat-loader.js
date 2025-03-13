@@ -6,12 +6,20 @@
         let repoBase = "https://kleverboyai.github.io/klever/dealerships/";
 
         let dealershipFiles = {
+            "jameschevy.co": "jameschevy.json",
+            "www.jameschevy.co": "jameschevy.json", // ✅ Added `www.` version
             "jameschevrolet.co": "jameschevrolet.json",
+            "www.jameschevrolet.co": "jameschevrolet.json", // ✅ Ensure all domains are covered
             "jameschrysler.com": "jamescdjr.json",
+            "www.jameschrysler.com": "jamescdjr.json",
             "jamesmitsubishigreece.com": "jamesgreece.json",
+            "www.jamesmitsubishigreece.com": "jamesgreece.json",
             "jamesmitsubishi.com": "jamesrome.json",
-            "ozmodelz.com": "ozmodelz.json"
-        };
+            "www.jamesmitsubishi.com": "jamesrome.json",
+            "ozmodelz.com": "ozmodelz.json",
+            "www.ozmodelz.com": "ozmodelz.json"
+};
+
 
         let jsonUrl = dealershipFiles[hostname] ? repoBase + dealershipFiles[hostname] : null;
 
