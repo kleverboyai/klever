@@ -2,42 +2,44 @@
     const API = await APILoader.create();
 
     function getDealershipWidgetId(callback) {
-        let hostname = window.location.hostname.replace("www.", "").toLowerCase();
+        let hostname = window.location.hostname.toLowerCase().replace(/^www\./, ""); // Normalize hostname
         let repoBase = "https://kleverboyai.github.io/klever/dealerships/";
 
         let dealershipFiles = {
-            "jameschevy.co": "jameschevy.json",
-            "www.jameschevy.co": "jameschevy.json", // ✅ Added `www.` version
+            "jameschevy.co": "jameschevy.json", // ✅ Ensure this exists
             "jameschevrolet.co": "jameschevrolet.json",
-            "www.jameschevrolet.co": "jameschevrolet.json", // ✅ Ensure all domains are covered
             "jameschrysler.com": "jamescdjr.json",
-            "www.jameschrysler.com": "jamescdjr.json",
             "jamesmitsubishigreece.com": "jamesgreece.json",
-            "www.jamesmitsubishigreece.com": "jamesgreece.json",
             "jamesmitsubishi.com": "jamesrome.json",
-            "www.jamesmitsubishi.com": "jamesrome.json",
-            "ozmodelz.com": "ozmodelz.json",
-            "www.ozmodelz.com": "ozmodelz.json"
-};
+            "ozmodelz.com": "ozmodelz.json"
+        };
 
+        console.log("🔍 Detected Hostname:", window.location.hostname);
+        console.log("✅ Normalized Hostname:", hostname);
+        console.log("🔗 Matching JSON File:", dealershipFiles[hostname]);
 
         let jsonUrl = dealershipFiles[hostname] ? repoBase + dealershipFiles[hostname] : null;
 
         if (!jsonUrl) {
-            console.warn("No chat widget configured for this dealership.");
+            console.warn("⚠️ No chat widget configured for this dealership.");
             return;
         }
 
         fetch(jsonUrl)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.widgetId) {
                     callback(data.widgetId);
                 } else {
-                    console.error("Widget ID not found in JSON.");
+                    console.error("⚠️ Widget ID not found in JSON.");
                 }
             })
-            .catch(error => console.error("Error loading dealership JSON:", error));
+            .catch(error => console.error("❌ Error loading dealership JSON:", error));
     }
 
     function loadChatWidget(widgetId) {
@@ -70,7 +72,6 @@
         }
     }
 
-    // ✅ Ensure `API.insert()` is only used after API is defined
     API.insert("page-footer", (elem) => {
         const div = document.createElement("div");
         div.innerHTML = `
